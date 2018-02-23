@@ -5,7 +5,7 @@ local function keyCode(key, modifiers)
    return function()
       hs.eventtap.event.newKeyEvent(modifiers, string.lower(key), true):post()
       hs.timer.usleep(1000)
-      hs.eventtap.event.newKeyEvent(modifiers, string.lower(key), false):post()      
+      hs.eventtap.event.newKeyEvent(modifiers, string.lower(key), false):post()
    end
 end
 
@@ -38,7 +38,7 @@ local function handleGlobalAppEvent(name, event, app)
    if event == hs.application.watcher.activated then
       -- hs.alert.show(name)
       if name == "iTerm2" then
-         disableAllHotkeys()         
+         disableAllHotkeys()
       else
          enableAllHotkeys()
       end
@@ -69,7 +69,10 @@ end
 
 
 local function inputSourceChangedForSemicoron()
-    if hs.keycodes.currentMethod() == nil then
+    -- hs.alert.show(hs.keycodes.currentMethod())
+    
+    if hs.keycodes.currentMethod() == nil or hs.keycodes.currentMethod():find('英字') then
+        
         enableSemicoronHotKey()
     else
         disableSemicoronHotKey()
@@ -231,8 +234,6 @@ jisKeyboardFilter = hs.eventtap.new({
     end
 end)
 jisKeyboardFilter:start()
-
-
 
 
 
